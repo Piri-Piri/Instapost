@@ -10,7 +10,11 @@ const userRoutes = require('./routes/user');
 const app = express();
 
 // Connect to MongoDB
-mongoose.connect("mongodb+srv://david:9LtWcWm85f8HIWxT@cluster0-wuev6.mongodb.net/instapost?retryWrites=true&w=majority")
+mongoose.connect(
+    'mongodb+srv://david:' +
+    process.env.MONGO_ATLAS_PW +
+    '@cluster0-wuev6.mongodb.net/instapost?retryWrites=true&w=majority'
+  )
   .then(() => {
     console.log('Connected to database!');
   })
