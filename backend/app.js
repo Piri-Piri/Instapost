@@ -25,7 +25,7 @@ mongoose.connect(
 // Parse Body of all Requests
 app.use(bodyParser.json());
 // handle uploaded images as statis content
-app.use('/uploadedImages', express.static(path.join('backend/uploadedImages')));
+app.use('/uploadedImages', express.static(path.join('uploadedImages')));
 
 // Enable CORS
 app.use((req, res, next) => {
