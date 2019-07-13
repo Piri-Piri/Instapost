@@ -24,11 +24,15 @@ mongoose.connect(
 
 // Parse Body of all Requests
 app.use(bodyParser.json());
-// handle uploaded images as statis content
-app.use('/uploadedImages', express.static(path.join('uploadedImages')));
 
-// Enable CORS
-app.use((req, res, next) => {
+/* handle static content */
+// handle uploaded images as static content
+app.use('/uploadedImages', express.static(path.join(__dirname, 'uploadedImages')));
+// handle ANY angular route as static content
+app.use('/', express.static(path.join(__dirname, 'instapost')));
+
+// Enable CORS (Note: only for two app deployment required)
+/* app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*")
   res.setHeader(
     "Access-Control-Allow-Headers",
@@ -39,12 +43,16 @@ app.use((req, res, next) => {
     "GET, POST, PUT, PATCH, DELETE, OPTIONS"
   );
   next();
-});
+}); */
 
-// Routing:
+/* Routing */
 // - Point all "Posts" routes to posts.js
 // - Point all "User" routes to user.js
 app.use('/api/posts', postsRoutes)
 app.use('/api/user', userRoutes)
+// - Point all NON-API routes to index.html (angular)
+app.use((req, res, next) => {
+  res.sendFile(path.join(__dirname, 'instapost','index.html'));
+});
 
 module.exports = app;
